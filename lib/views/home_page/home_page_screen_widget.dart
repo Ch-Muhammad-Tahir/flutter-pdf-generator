@@ -38,62 +38,62 @@ class _HomePageScreenWidgetState extends State<HomePageScreenWidget> {
             const SizedBox(
               height: 20,
             ),
-            CustomTextField(
-                controller: nameController,
-                hintText: AppStrings.enterNameHint,
-                labelText: AppStrings.nameLabel),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-                controller: itemNameController,
-                hintText: AppStrings.enterItemNameHint,
-                labelText: AppStrings.itemLabel),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-                controller: itemQuantityController,
-                hintText: AppStrings.itemQuantityHint,
-                labelText: AppStrings.itemQuantity),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-                controller: itemPriceController,
-                hintText: AppStrings.itemPriceHint,
-                labelText: AppStrings.itemPrice),
-
-            const SizedBox(
-              height: 60,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  String name = nameController.text.toString();
-                  String itemName = itemNameController.text.toString();
-                  String quantity = itemQuantityController.text.toString();
-                  String price = itemPriceController.text.toString();
-                  Provider.of<GeneratePdfProvider>(context, listen: false)
-                      .checkValidation(
-                          name, itemName, quantity, price, context);
-                },
-                child: Text(AppStrings.generatePDF)),
-
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     generatePDF();
-            //   },
-            //   child: Text(AppStrings.generatePDF),
+            // CustomTextField(
+            //     controller: nameController,
+            //     hintText: AppStrings.enterNameHint,
+            //     labelText: AppStrings.nameLabel),
+            // const SizedBox(
+            //   height: 20,
             // ),
-            // // Show the PDF viewer if a PDF has been generated
-            // if (pdfPath.isNotEmpty)
-            //   Expanded(
-            //     child: PDFView(
-            //       filePath: pdfPath,
-            //       enableSwipe: true,
-            //       swipeHorizontal: true,
-            //     ),
-            //   ),
+            // CustomTextField(
+            //     controller: itemNameController,
+            //     hintText: AppStrings.enterItemNameHint,
+            //     labelText: AppStrings.itemLabel),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // CustomTextField(
+            //     controller: itemQuantityController,
+            //     hintText: AppStrings.itemQuantityHint,
+            //     labelText: AppStrings.itemQuantity),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // CustomTextField(
+            //     controller: itemPriceController,
+            //     hintText: AppStrings.itemPriceHint,
+            //     labelText: AppStrings.itemPrice),
+
+            // const SizedBox(
+            //   height: 60,
+            // ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       String name = nameController.text.toString();
+            //       String itemName = itemNameController.text.toString();
+            //       String quantity = itemQuantityController.text.toString();
+            //       String price = itemPriceController.text.toString();
+            //       Provider.of<GeneratePdfProvider>(context, listen: false)
+            //           .checkValidation(
+            //               name, itemName, quantity, price, context);
+            //     },
+            //     child: Text(AppStrings.generatePDF)),
+
+            ElevatedButton(
+              onPressed: () async {
+                generatePDF();
+              },
+              child: Text(AppStrings.generatePDF),
+            ),
+            // Show the PDF viewer if a PDF has been generated
+            if (pdfPath.isNotEmpty)
+              Expanded(
+                child: PDFView(
+                  filePath: pdfPath,
+                  enableSwipe: true,
+                  swipeHorizontal: true,
+                ),
+              ),
           ],
         ),
       ),
@@ -113,16 +113,15 @@ class _HomePageScreenWidgetState extends State<HomePageScreenWidget> {
     // final String imageUrl = 'https://picsum.photos/250?image=9';
     // final backgroundImage = await Image.network(imageUrl);
     pdf.addPage(pw.Page(
-      pageFormat: PdfPageFormat.a4,
+      pageFormat: PdfPageFormat(3.46, 5.5).portrait,
       build: (context) {
         return pw.Stack(children: [
           pw.Image(backgroundImage, fit: pw.BoxFit.fill),
           pw.Center(
-              child: pw.Text("Hello World",
-                  style: const pw.TextStyle(fontSize: 25))),
-          pw.Center(
-              child:
-                  pw.Text("Welcome", style: const pw.TextStyle(fontSize: 12))),
+              child: pw.Text(
+            "Hello World",
+            style: pw.TextStyle(fontSize: 0.21),
+          )),
         ]);
       },
     ));
